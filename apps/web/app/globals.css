@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #FAF7F2;
+  --surface-card: #EBE2D5;
+  --surface-dark: #362F2A;
+  --surface-dark-elevated: #453C36;
+  --primary: #C86D51;
+  --primary-active: #AB553B;
+  --primary-disabled: #E5DDD3;
+  --ink: #2C2521;
+  --body: #544A43;
+  --muted: #7B6F66;
+  --hairline: #DFD5C7;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', 'Tiempos Headline', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', Menlo, monospace;
+}
+
+/* Editorial display typography */
+.display-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #DFD5C7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C7BCB1;
+}

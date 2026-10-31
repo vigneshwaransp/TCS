@@ -1,0 +1,2 @@
+business_id,business_name,legal_entity_name,business_type,headquarters_address,headquarters_city,headquarters_state,country,transfer_policy,is_active,data_source,verification_status
+BIZ_DMART_IN,DMart,Avenue Supermarts Limited,Supermarket & Hypermarket Retail Chain,"Anjaneya CHS, Orchard Avenue, Opp. Hiranandani Foundation School, Powai",Mumbai,Maharashtra,India,INTRA_CHAIN_PERMITTED,TRUE,Public Corporate Filings / BSE / Official Listings,VERIFIED_PUBLIC_INFO

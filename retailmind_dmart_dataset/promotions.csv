@@ -1,0 +1,4 @@
+promotion_id,business_id,store_id,sku,promotion_name,promotion_type,start_date,end_date,discount_pct,promotion_budget_inr,planned_flag,is_active,data_provenance
+PROM_2026_01,BIZ_DMART_IN,STORE_001,SKU_DM_0001,Mega Pongal & Weekend Grocery Bash,PERCENT_DISCOUNT,2026-11-01,2026-11-07,15.0,45000.0,TRUE,TRUE,Synthetic promotion schedule for Chennai festival season
+PROM_2026_02,BIZ_DMART_IN,STORE_001,SKU_DM_0010,Deepavali Cooking Oil Super Saver,PERCENT_DISCOUNT,2026-11-02,2026-11-08,12.0,60000.0,TRUE,TRUE,Synthetic promotion schedule for Chennai festival season
+PROM_2026_03,BIZ_DMART_IN,STORE_002,SKU_DM_0019,Monsoon Warmth Coffee Festival,BUNDLE_DISCOUNT,2026-10-25,2026-11-05,10.0,25000.0,TRUE,TRUE,Synthetic promotion schedule for Chennai festival season

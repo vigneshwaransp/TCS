@@ -1,0 +1,6 @@
+supplier_id,supplier_name,supplier_city,supplier_state,supplier_lead_time_days,supplier_reliability_rate,minimum_order_value_inr,minimum_order_quantity,delivery_cost_inr,delivery_cost_per_km_inr,is_active,data_provenance
+SUP_001,South India Agro Foods & Grains Ltd,Kanchipuram,Tamil Nadu,4,0.94,25000.0,100,1200.0,18.0,TRUE,Synthetic supplier entity modelled on regional wholesale FMCG distribution
+SUP_002,Coromandel Edible Oils & Fats Corp,Chennai,Tamil Nadu,3,0.96,35000.0,80,950.0,15.0,TRUE,Synthetic supplier entity modelled on regional wholesale FMCG distribution
+SUP_003,Nilgiri Beverages & Dairy Producers,Coimbatore,Tamil Nadu,5,0.91,20000.0,120,1800.0,22.0,TRUE,Synthetic supplier entity modelled on regional wholesale FMCG distribution
+SUP_004,Madras Consumer Hygiene & Home Care,Sriperumbudur,Tamil Nadu,3,0.97,15000.0,60,850.0,16.0,TRUE,Synthetic supplier entity modelled on regional wholesale FMCG distribution
+SUP_005,Deccan Spice Mills & Packaged Goods,Madurai,Tamil Nadu,6,0.89,18000.0,50,2100.0,20.0,TRUE,Synthetic supplier entity modelled on regional wholesale FMCG distribution

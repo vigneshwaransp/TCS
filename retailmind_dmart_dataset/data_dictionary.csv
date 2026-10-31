@@ -1,0 +1,25 @@
+file_name,column_name,data_type,description,example_value,is_required,source_type,validation_rule
+businesses.csv,business_id,STRING,Unique identifier of the retail operator,BIZ_DMART_IN,TRUE,SYSTEM_ID,MUST_NOT_BE_NULL
+businesses.csv,business_name,STRING,Trade brand name,DMart,TRUE,PUBLIC_INFO,NOT_EMPTY
+businesses.csv,legal_entity_name,STRING,Registered corporate name,Avenue Supermarts Limited,TRUE,PUBLIC_RECORD,NOT_EMPTY
+businesses.csv,transfer_policy,STRING,Rules governing store-to-store inventory rebalancing,INTRA_CHAIN_PERMITTED,TRUE,BUSINESS_POLICY,"ENUM[INTRA_CHAIN_PERMITTED,RESTRICTED]"
+stores.csv,store_id,STRING,Unique physical store node identifier,STORE_001,TRUE,SYSTEM_ID,MUST_BE_UNIQUE
+stores.csv,store_name,STRING,Branch name with locality,DMart Velachery,TRUE,VERIFIED_LOCATION,NOT_EMPTY
+stores.csv,latitude,FLOAT,Geographic latitude in decimal degrees,12.9806,TRUE,VERIFIED_COORDINATES,"BETWEEN(8.0, 37.0)"
+stores.csv,longitude,FLOAT,Geographic longitude in decimal degrees,80.2227,TRUE,VERIFIED_COORDINATES,"BETWEEN(68.0, 97.0)"
+stores.csv,storage_capacity_units,INTEGER,Maximum warehouse/backroom unit capacity,85000,TRUE,STORE_SPEC,POSITIVE_INTEGER
+products_suppliers.csv,sku,STRING,Stock keeping unit unique code,SKU_DM_0001,TRUE,CATALOGUE_ID,MUST_BE_UNIQUE
+products_suppliers.csv,selling_price_inr,"DECIMAL(10,2)",Customer shelf price in Indian Rupees,125.00,TRUE,PRICING,GREATER_THAN_ZERO
+products_suppliers.csv,unit_cost_inr,"DECIMAL(10,2)",Procurement cost of goods sold in INR,102.50,TRUE,COST_ACCOUNTING,LESS_THAN_SELLING_PRICE
+products_suppliers.csv,gross_margin_rate,FLOAT,(selling_price - unit_cost)/selling_price,0.18,TRUE,CALCULATED,"BETWEEN(0.0, 1.0)"
+products_suppliers.csv,shelf_life_days,INTEGER,Total batch durability in days,365,TRUE,PRODUCT_SPEC,POSITIVE_INTEGER
+store_routes.csv,origin_store_id,STRING,Source branch node ID,STORE_001,TRUE,FOREIGN_KEY(stores.store_id),VALID_STORE
+store_routes.csv,destination_store_id,STRING,Destination branch node ID,STORE_002,TRUE,FOREIGN_KEY(stores.store_id),NOT_EQUAL_TO(origin)
+store_routes.csv,road_distance_km_est,FLOAT,Estimated road distance in kilometers,14.2,TRUE,CALCULATED_ESTIMATE,GREATER_THAN_ZERO
+store_routes.csv,estimated_route_cost_inr,"DECIMAL(10,2)",Fixed dispatch + distance cost in INR,762.40,TRUE,LOGISTICS_RATE,GREATER_THAN_ZERO
+inventory.csv,on_hand_units,INTEGER,Physical stock presently in store backroom/shelves,18,TRUE,INVENTORY_COUNT,NON_NEGATIVE
+inventory.csv,reserved_units,INTEGER,Stock committed to customer orders or dispatch,4,TRUE,ALLOCATION,LESS_OR_EQUAL(on_hand_units)
+inventory.csv,safety_stock_units,INTEGER,Buffer stock to absorb demand/lead time variance,20,TRUE,POLICY_THRESHOLD,NON_NEGATIVE
+inventory.csv,reorder_point_units,INTEGER,Lead-time demand + safety stock threshold,52,TRUE,POLICY_THRESHOLD,GREATER_THAN(safety_stock_units)
+sales_history.csv,units_sold,INTEGER,Daily fulfilled units sold to consumers,24,TRUE,SALES_METRIC,NON_NEGATIVE
+sales_history.csv,stockout_flag,BOOLEAN,Indicates if sales were truncated due to zero inventory,FALSE,TRUE,OPERATIONAL_STATUS,"ENUM[TRUE,FALSE]"

@@ -1,0 +1,4 @@
+purchase_order_id,business_id,store_id,supplier_id,sku,order_date,expected_delivery_date,actual_delivery_date,ordered_units,received_units,unit_cost_inr,purchase_order_status,data_provenance
+PO_2026_0891,BIZ_DMART_IN,STORE_001,SUP_001,SKU_DM_0001,2026-10-20,2026-10-24,2026-10-25,150,150,82.5,FULFILLED,Synthetic procurement order log
+PO_2026_0944,BIZ_DMART_IN,STORE_002,SUP_001,SKU_DM_0001,2026-10-28,2026-11-01,,100,0,82.5,IN_TRANSIT,Synthetic procurement order log
+PO_2026_0955,BIZ_DMART_IN,STORE_001,SUP_002,SKU_DM_0010,2026-10-29,2026-11-03,,80,0,115.0,PLACED_PENDING_DISPATCH,Synthetic procurement order log

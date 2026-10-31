@@ -1,0 +1,3 @@
+transfer_id,business_id,source_store_id,destination_store_id,sku,request_date,dispatch_date,arrival_date,requested_units,transferred_units,transfer_cost_inr,estimated_travel_time_min,actual_travel_time_min,transfer_status,reason,data_provenance
+TRF_2026_0101,BIZ_DMART_IN,STORE_002,STORE_001,SKU_DM_0001,2026-10-15,2026-10-15,2026-10-15,40,40,820.0,52,58,COMPLETED,Stockout prevention prior to festival spike,Synthetic historical transfer log
+TRF_2026_0102,BIZ_DMART_IN,STORE_005,STORE_003,SKU_DM_0010,2026-10-18,2026-10-19,2026-10-19,30,30,780.0,45,43,COMPLETED,Regional stock balancing,Synthetic historical transfer log
