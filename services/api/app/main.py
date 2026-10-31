@@ -24,6 +24,7 @@ from app.api.v1.health import router as health_router
 from app.api.v1.copilot import router as copilot_router
 from app.api.v1.visualizations import router as visualizations_router
 from app.api.v1.agents import router as agents_router
+from app.api.v1.manual_entry import router as manual_entry_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -72,6 +73,7 @@ app.include_router(audit_router, prefix=api_v1)
 app.include_router(copilot_router, prefix=api_v1)
 app.include_router(visualizations_router, prefix=f"{api_v1}/visualizations")
 app.include_router(agents_router, prefix=f"{api_v1}/agents")
+app.include_router(manual_entry_router, prefix=api_v1)
 
 @app.get("/")
 def root():

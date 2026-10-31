@@ -151,3 +151,73 @@ def test_copilot_chat():
     assert "answer" in data
     assert len(data["answer"]) > 20
     assert "model_used" in data
+
+def test_manual_user_entry_and_persistence():
+    payload = {
+        "full_name": "Test Engineer",
+        "email": "test.engineer@dmartindia.com",
+        "role": "Inventory Specialist",
+        "department": "Supply Chain Operations",
+        "phone": "+91 98765 43210",
+        "assigned_location": "STORE_001",
+        "access_tier": "operator",
+        "notes": "Automated verification test user"
+    }
+    # 1. Create user in Neon DB
+    create_resp = client.post("/api/v1/manual-entry/users", json=payload)
+    assert create_resp.status_code == 200
+    created = create_resp.json()
+    assert created["status"] == "success"
+    assert created["entry"]["full_name"] == "Test Engineer"
+    entry_id = created["entry"]["entry_id"]
+
+    # 2. List users and verify persistence
+    list_resp = client.get("/api/v1/manual-entry/users")
+    assert list_resp.status_code == 200
+    list_data = list_resp.json()
+    users = list_data.get("entries", [])
+    matching = [u for u in users if u["entry_id"] == entry_id]
+    assert len(matching) == 1
+    assert matching[0]["email"] == "test.engineer@dmartindia.com"
+
+    # 3. Delete user
+    del_resp = client.delete(f"/api/v1/manual-entry/users/{entry_id}")
+    assert del_resp.status_code == 200
+    assert del_resp.json()["status"] == "success"
+
+def test_ml_training_and_model_status():
+    # 1. Verify model status endpoint
+    status_resp = client.get("/api/v1/forecasts/model-status")
+    assert status_resp.status_code == 200
+    status_data = status_resp.json()
+    assert "status" in status_data
+    assert "champion_model" in status_data
+    assert "models" in status_data
+    assert "lightgbm" in status_data["models"]
+    assert "xgboost" in status_data["models"]
+
+    # 2. Test forward ML inference
+    pred_payload = {
+        "store_id": "STORE_001",
+        "sku": "SKU_DM_0001",
+        "base_velocity": 45.0,
+        "unit_price": 145.0,
+        "promotion_active": False,
+        "days_ahead": 7
+    }
+    pred_resp = client.post("/api/v1/forecasts/predict-ml", json=pred_payload)
+    assert pred_resp.status_code == 200
+    pred_data = pred_resp.json()
+    assert pred_data["status"] == "success"
+    assert "predictions" in pred_data
+    assert len(pred_data["predictions"]) == 7
+
+def test_autonomous_action_execution():
+    # Test triggering autonomous action
+    auto_resp = client.post("/api/v1/copilot/autonomous-action", json={"action": "rebalance_inventory"})
+    assert auto_resp.status_code == 200
+    auto_data = auto_resp.json()
+    assert auto_data["status"] == "success"
+    assert "action" in auto_data
+
+

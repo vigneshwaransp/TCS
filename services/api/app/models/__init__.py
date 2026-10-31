@@ -1,4 +1,4 @@
-from app.models.identity import User, AuditLog
+from app.models.identity import User, AuditLog, ManualUserEntry
 from app.models.retail import (
     Business, Store, Supplier, Product,
     StoreProductAssortment, StoreRoute, Promotion

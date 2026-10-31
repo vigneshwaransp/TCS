@@ -13,6 +13,7 @@ import {
   Database,
   Menu,
   X,
+  UserPlus,
 } from "lucide-react";
 import { AuthUser, PRESET_PERSONAS } from "./LoginPage";
 
@@ -73,6 +74,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: "Data Ingestion & CSV",
       description: "Upload & analyze any dataset",
       icon: UploadCloud,
+    },
+    {
+      id: "manual_entry",
+      label: "User Registry & Entry",
+      description: "Permanent manual DB records",
+      icon: UserPlus,
     },
   ];
 

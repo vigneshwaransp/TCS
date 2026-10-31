@@ -8,6 +8,7 @@ import { VisualizationsView } from "../components/VisualizationsView";
 import { AgenticPipelineView } from "../components/AgenticPipelineView";
 import { InventoryView } from "../components/InventoryView";
 import { DataManagementView } from "../components/DataManagementView";
+import { ManualDataEntryView } from "../components/ManualDataEntryView";
 import { CopilotDrawer } from "../components/CopilotDrawer";
 import { api } from "../lib/api";
 
@@ -194,6 +195,9 @@ export default function Home() {
               activeDatasetName={activeDatasetName}
             />
           )}
+
+          {/* 6. MANUAL DATA ENTRY & USER REGISTRY (Permanent DB Records) */}
+          {currentTab === "manual_entry" && <ManualDataEntryView />}
         </main>
 
         {/* Warm Espresso Footer (No Black) */}

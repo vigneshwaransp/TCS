@@ -61,15 +61,6 @@ export const ExecutiveCockpit: React.FC<CockpitProps> = ({
         </div>
 
         <div className="flex items-center gap-3">
-          {onOpenCopilot && (
-            <button
-              onClick={onOpenCopilot}
-              className="px-3.5 py-2 rounded-md bg-surface-dark hover:bg-surface-dark-elevated text-on-dark text-xs font-medium flex items-center gap-2 transition shadow-sm"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
-              <span>Ask Decision Copilot</span>
-            </button>
-          )}
           <div className="text-right font-mono text-xs text-muted border-l border-hairline pl-4 hidden md:block">
             <div className="text-ink font-medium">Dataset Connected</div>
             <div className="text-[11px] text-muted">{summary?.total_sales_records ? `${summary.total_sales_records.toLocaleString()} Sales Records` : "Active ERP"}</div>
