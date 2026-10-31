@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   Sparkles,
   Send,
@@ -239,7 +241,55 @@ export const CopilotDrawer: React.FC<CopilotProps> = ({
                     : "bg-surface-dark-elevated border border-surface-dark-soft text-on-dark"
                 }`}
               >
-                <div className="whitespace-pre-wrap">{msg.content}</div>
+                {isUser ? (
+                  <div className="whitespace-pre-wrap">{msg.content}</div>
+                ) : (
+                  <div className="prose prose-invert prose-xs max-w-none text-on-dark leading-relaxed font-sans space-y-2">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h1: ({ children }) => <h1 className="text-sm font-serif font-bold text-primary mt-2 mb-1">{children}</h1>,
+                        h2: ({ children }) => <h2 className="text-xs font-serif font-semibold text-primary mt-2 mb-1">{children}</h2>,
+                        h3: ({ children }) => <h3 className="text-xs font-mono font-medium text-on-dark mt-1.5 mb-0.5">{children}</h3>,
+                        p: ({ children }) => <p className="text-xs leading-relaxed mb-1.5 text-on-dark">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc pl-4 space-y-1 my-1 text-xs text-on-dark">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal pl-4 space-y-1 my-1 text-xs text-on-dark">{children}</ol>,
+                        li: ({ children }) => <li className="text-xs leading-relaxed">{children}</li>,
+                        strong: ({ children }) => <strong className="font-semibold text-primary font-mono">{children}</strong>,
+                        code: ({ children, ...props }: any) => {
+                          const isInline = !String(children).includes("\n");
+                          return isInline ? (
+                            <code className="bg-surface-dark px-1 py-0.5 rounded text-[11px] font-mono text-accent-teal border border-surface-dark-soft">
+                              {children}
+                            </code>
+                          ) : (
+                            <pre className="bg-surface-dark p-2.5 rounded-md overflow-x-auto my-2 text-[11px] font-mono border border-surface-dark-soft text-on-dark-soft">
+                              <code>{children}</code>
+                            </pre>
+                          );
+                        },
+                        table: ({ children }) => (
+                          <div className="overflow-x-auto my-2">
+                            <table className="w-full text-left text-[11px] font-mono border-collapse border border-surface-dark-soft">{children}</table>
+                          </div>
+                        ),
+                        th: ({ children }) => (
+                          <th className="bg-surface-dark p-1.5 font-semibold text-primary border-b border-surface-dark-soft">{children}</th>
+                        ),
+                        td: ({ children }) => (
+                          <td className="p-1.5 border-b border-surface-dark-soft text-on-dark-soft">{children}</td>
+                        ),
+                        blockquote: ({ children }) => (
+                          <blockquote className="border-l-2 border-primary pl-3 py-1 my-1.5 text-xs italic text-on-dark-soft bg-surface-dark/50">
+                            {children}
+                          </blockquote>
+                        ),
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
+                  </div>
+                )}
 
                 {/* AI Action Execution Card */}
                 {!isUser && msg.action_triggered && (

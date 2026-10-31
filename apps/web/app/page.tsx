@@ -9,6 +9,9 @@ import { AgenticPipelineView } from "../components/AgenticPipelineView";
 import { InventoryView } from "../components/InventoryView";
 import { DataManagementView } from "../components/DataManagementView";
 import { ManualDataEntryView } from "../components/ManualDataEntryView";
+import { StorePerformanceView } from "../components/StorePerformanceView";
+import { DemandRiskView } from "../components/DemandRiskView";
+import { ExplainRecommendationsView } from "../components/ExplainRecommendationsView";
 import { CopilotDrawer } from "../components/CopilotDrawer";
 import { api } from "../lib/api";
 
@@ -171,7 +174,16 @@ export default function Home() {
             />
           )}
 
-          {/* 2. VISUAL ANALYTICS (Matplotlib Charts & Histograms from dataset) */}
+          {/* 2. STORE PERFORMANCE MATRIX (Stock, Demand, Required, Inventory - Zero Hardcoding) */}
+          {currentTab === "store_performance" && <StorePerformanceView />}
+
+          {/* 3. DEMAND FORECASTING & RISK PREDICTION ENGINE */}
+          {currentTab === "demand_risk" && <DemandRiskView />}
+
+          {/* 4. EXPLAIN RECOMMENDATIONS (Root Causes, Compared Alternatives & React Markdown AI) */}
+          {currentTab === "explain_recs" && <ExplainRecommendationsView />}
+
+          {/* 5. VISUAL ANALYTICS (Matplotlib Charts & Histograms from dataset) */}
           {currentTab === "visuals" && <VisualizationsView />}
 
           {/* 3. AGENTIC DECISION ENGINE (Autonomous Multi-Agent Cycle + Context Memory) */}

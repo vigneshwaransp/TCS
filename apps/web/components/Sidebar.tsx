@@ -14,6 +14,8 @@ import {
   Menu,
   X,
   UserPlus,
+  Building2,
+  TrendingUp,
 } from "lucide-react";
 import { AuthUser, PRESET_PERSONAS } from "./LoginPage";
 
@@ -50,6 +52,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: "Executive Cockpit",
       description: "Network telemetry & directives",
       icon: Compass,
+    },
+    {
+      id: "store_performance",
+      label: "Store Performance",
+      description: "Stock • Demand • Required • Net",
+      icon: Building2,
+    },
+    {
+      id: "demand_risk",
+      label: "Demand & Risk Prediction",
+      description: "Quantile bounds & stockout risk",
+      icon: TrendingUp,
+    },
+    {
+      id: "explain_recs",
+      label: "Explain Recommendations",
+      description: "Root causes & React Markdown",
+      icon: Sparkles,
     },
     {
       id: "visuals",

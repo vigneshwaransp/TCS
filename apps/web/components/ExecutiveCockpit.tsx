@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AlertTriangle,
   ArrowRight,
@@ -10,7 +10,9 @@ import {
   ShieldCheck,
   Sparkles,
   TrendingUp,
+  Building2,
 } from "lucide-react";
+import { api } from "../lib/api";
 
 interface CockpitProps {
   summary: any;
@@ -35,6 +37,23 @@ export const ExecutiveCockpit: React.FC<CockpitProps> = ({
   onSelectRecommendation = () => {},
   onOpenCopilot,
 }) => {
+  const [storePerformance, setStorePerformance] = useState<any[]>([]);
+  const [loadingStores, setLoadingStores] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        const data = await api.getStoresPerformance();
+        setStorePerformance(data || []);
+      } catch (e) {
+        console.error("Cockpit store performance fetch error:", e);
+      } finally {
+        setLoadingStores(false);
+      }
+    };
+    fetchStores();
+  }, []);
+
   const operatorName = summary?.operator_name || "Active Retail Network";
   const regionName = summary?.network_region || "Operational Region";
   const activeStores = summary?.active_stores || 0;
@@ -181,6 +200,80 @@ export const ExecutiveCockpit: React.FC<CockpitProps> = ({
           </div>
         </div>
       ) : null}
+
+      {/* Store Network Performance Summary (Live DB Calculations: Stock, Demand, Required, Inventory) */}
+      <div className="bg-canvas border border-hairline rounded-xl overflow-hidden shadow-sm space-y-4 p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-hairline pb-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-primary" />
+              <h2 className="font-serif text-xl font-medium text-ink">
+                Network Stores Performance
+              </h2>
+            </div>
+            <p className="text-xs text-muted mt-0.5">
+              Live database calculation of <strong>Stock</strong> (On-Hand), <strong>Demand</strong> (7D Forecast), <strong>Required</strong> (Replenishment Deficit), and <strong>Net Inventory</strong> across all locations.
+            </p>
+          </div>
+          <span className="font-mono text-xs text-primary font-semibold bg-surface-card px-2.5 py-1 rounded-full border border-hairline">
+            Zero Hardcoding • Live Neon DB
+          </span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-hairline text-muted font-mono uppercase text-[10px] bg-surface-soft">
+                <th className="py-2.5 px-3 font-medium">Store Location</th>
+                <th className="py-2.5 px-3 font-medium text-right text-ink font-bold">Stock (On-Hand)</th>
+                <th className="py-2.5 px-3 font-medium text-right text-primary font-bold">7D Demand</th>
+                <th className="py-2.5 px-3 font-medium text-right text-status-warning font-bold">Required</th>
+                <th className="py-2.5 px-3 font-medium text-right text-accent-teal font-bold">Net Inventory</th>
+                <th className="py-2.5 px-3 font-medium text-right">Avg DOS</th>
+                <th className="py-2.5 px-3 font-medium text-center">Health Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-hairline">
+              {storePerformance.map((st) => (
+                <tr key={st.store_id} className="hover:bg-surface-card transition">
+                  <td className="py-2.5 px-3 font-mono font-medium text-ink">
+                    <div className="font-serif text-sm font-semibold text-ink">{st.store_name}</div>
+                    <div className="text-[10px] text-muted font-mono">{st.locality}, {st.city}</div>
+                  </td>
+                  <td className="py-2.5 px-3 text-right font-mono font-bold text-ink">
+                    {st.stock?.toLocaleString()}
+                  </td>
+                  <td className="py-2.5 px-3 text-right font-mono font-bold text-primary">
+                    {st.demand?.toLocaleString()}
+                  </td>
+                  <td className="py-2.5 px-3 text-right font-mono font-bold text-status-warning">
+                    {st.required?.toLocaleString()}
+                  </td>
+                  <td className="py-2.5 px-3 text-right font-mono font-bold text-accent-teal">
+                    {st.inventory?.toLocaleString()}
+                  </td>
+                  <td className="py-2.5 px-3 text-right font-mono text-muted">
+                    {st.avg_days_of_supply}d
+                  </td>
+                  <td className="py-2.5 px-3 text-center">
+                    <span
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase ${
+                        st.health_badge === "CRITICAL_DEFICIT"
+                          ? "bg-status-error text-white"
+                          : st.health_badge === "NEEDS_REBALANCING"
+                          ? "bg-amber-100 text-amber-800 border border-amber-300"
+                          : "bg-green-100 text-green-800 border border-green-300"
+                      }`}
+                    >
+                      {st.health_badge?.replace(/_/g, " ")}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       {/* Priority Decisions Queue from active dataset */}
       <div className="space-y-4">

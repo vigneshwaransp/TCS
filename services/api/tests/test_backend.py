@@ -34,6 +34,22 @@ def test_stores_listing():
     assert "DMart Velachery" in store_names
     assert "DMart Chromepet" in store_names
 
+def test_stores_performance_dynamic_metrics():
+    response = client.get("/api/v1/stores/performance")
+    assert response.status_code == 200
+    perf = response.json()
+    assert len(perf) == 5
+    for s in perf:
+        assert "stock" in s
+        assert "demand" in s
+        assert "required" in s
+        assert "inventory" in s
+        assert "health_badge" in s
+        assert s["stock"] > 0
+        assert s["demand"] > 0
+        assert s["inventory"] > 0
+        assert len(s["skus"]) > 0
+
 def test_inventory_positions():
     response = client.get("/api/v1/inventory/positions?store_id=STORE_001")
     assert response.status_code == 200
