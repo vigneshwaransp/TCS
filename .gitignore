@@ -14,7 +14,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -26,6 +25,9 @@ wheels/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Allow frontend lib directory
+!apps/web/lib/**
 
 # Node & Next.js
 node_modules/
@@ -48,6 +50,9 @@ kintral.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Cloned subfolders
+TCS/
 
 # Operating System
 .DS_Store
